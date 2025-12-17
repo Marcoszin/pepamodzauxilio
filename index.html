@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>peepaffz</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:system-ui,Segoe UI,Arial;
+}
+body{
+  min-height:100vh;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+}
+
+/* BACKGROUND */
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:
+    radial-gradient(circle at 20% 25%, rgba(255,0,150,.35), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(140,0,255,.35), transparent 45%),
+    #000;
+}
+
+/* CARD */
+.card{
+  width:380px;
+  background:#0d0d17;
+  border-radius:22px;
+  padding:18px;
+  border:2px solid rgba(255,0,150,.6);
+  box-shadow:
+    0 0 30px rgba(255,0,150,.6),
+    inset 0 0 15px rgba(255,0,150,.2);
+}
+.hidden{display:none}
+
+/* TITULO */
+.title{
+  text-align:center;
+  font-size:22px;
+  font-weight:700;
+  color:#ff2f92;
+  margin-bottom:16px;
+}
+
+/* INPUTS */
+input,select,textarea{
+  width:100%;
+  padding:13px;
+  margin-top:10px;
+  background:#171725;
+  border:1px solid rgba(255,0,150,.4);
+  border-radius:12px;
+  color:#fff;
+  outline:none;
+}
+textarea{resize:none}
+
+/* BOTÃO */
+button.main{
+  width:100%;
+  padding:15px;
+  margin-top:14px;
+  background:linear-gradient(135deg,#ff2f92,#a200ff);
+  border:none;
+  border-radius:14px;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 0 15px rgba(255,0,150,.6);
+}
+
+/* LAYOUT PAINEL */
+.panel{
+  display:flex;
+  gap:12px;
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:64px;
+  background:#121222;
+  border-radius:16px;
+  padding:8px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.sidebar button{
+  height:54px;
+  border:none;
+  border-radius:12px;
+  background:#1a1a2e;
+  color:#ff2f92;
+  font-size:20px;
+  cursor:pointer;
+  box-shadow:inset 0 0 8px rgba(255,0,150,.3);
+}
+
+/* CONTEÚDO */
+.content{
+  flex:1;
+}
+
+/* OPÇÕES */
+.option{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:10px 0;
+}
+.option span{font-size:14px}
+
+/* RANGE */
+.range label{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:6px;
+  font-size:13px;
+}
+input[type=range]{
+  -webkit-appearance:none;
+  appearance:none;
+  height:6px;
+  background:#222;
+  border-radius:10px;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:#ff2f92;
+  box-shadow:0 0 10px rgba(255,0,150,.8);
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  font-size:12px;
+  color:#777;
+  margin-top:10px;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+.modal-box{
+  background:#121222;
+  padding:20px;
+  border-radius:18px;
+  width:300px;
+  text-align:center;
+  border:2px solid rgba(255,0,150,.6);
+  box-shadow:0 0 25px rgba(255,0,150,.6);
+}
+</style>
+</head>
+
+<body>
+<div class="bg"></div>
+
+<!-- LOGIN -->
+<div class="card" id="login">
+  <div class="title">🔒 Login painel</div>
+  <input id="keyInput" placeholder="Digite sua chave de acesso">
+  <button class="main" onclick="loginKey()">Entrar</button>
+</div>
+
+<!-- PAINEL -->
+<div class="card hidden" id="painel">
+  <div class="title">pepaffz</div>
+
+  <div class="panel">
+    <div class="sidebar">
+      <button onclick="aba('aimbot')">🎯</button>
+      <button onclick="aba('info')">ℹ️</button>
+    </div>
+
+    <div class="content">
+      <div id="aimbot">
+        <div class="option"><span>Assistente de mira</span><input type="checkbox"></div>
+        <div class="option"><span>Alto FPS</span><input type="checkbox"></div>
+        <div class="option"><span>Aumentar precisão</span><input type="checkbox"></div>
+        <div class="option"><span>Ignorar derrubados</span><input type="checkbox"></div>
+
+        <div class="range">
+          <label><span>FOV</span><span id="fovVal">360</span></label>
+          <input type="range" min="1" max="360" value="360"
+            oninput="fovVal.innerText=this.value">
+        </div>
+
+        <select>
+          <option>Pescoço</option>
+          <option>Cabeça</option>
+          <option>Peito</option>
+        </select>
+
+        <button class="main" onclick="inject()">ATIVAR</button>
+        <button class="main" onclick="abrirAdmin()">PAINEL ADMIN</button>
+      </div>
+
+      <div id="info" class="hidden">
+        <p>Criado por: devX</p>
+        <p>Créditos: Pepa Modz</p>
+        <p>Modelo do dispositivo: Android</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>pepaffz</footer>
+</div>
+
+<!-- ADMIN -->
+<div class="card hidden" id="admin">
+  <div class="title">PAINEL ADMIN</div>
+
+  <select id="dias">
+    <option value="1">1 dia</option>
+    <option value="3">3 dias</option>
+    <option value="7">7 dias</option>
+    <option value="15">15 dias</option>
+    <option value="30">30 dias</option>
+  </select>
+
+  <input id="quantidade" placeholder="Quantidade de keys">
+  <button class="main" onclick="gerarKeys()">Gerar Keys</button>
+
+  <textarea id="listaKeys" rows="5"></textarea>
+
+  <input id="keyAlvo" placeholder="Key alvo">
+  <button class="main" onclick="banir()">Banir</button>
+  <button class="main" onclick="pausar()">Pausar</button>
+  <button class="main" onclick="desbanir()">Reativar</button>
+</div>
+
+<!-- MODAL -->
+<div id="ffModal" class="modal hidden">
+  <div class="modal-box">
+    <h3>Escolha a versão</h3>
+    <button class="main" onclick="ffNormal()">🔥 FF NORMAL</button>
+    <button class="main" onclick="ffMax()">💎 FF MAX</button>
+    <button onclick="fecharModal()" style="margin-top:10px;background:none;border:none;color:#aaa">
+      Cancelar
+    </button>
+  </div>
+</div>
+
+<script>
+/* KEYS */
+const ADMIN_PASSWORD="pepaadmin123";
+let KEYS=JSON.parse(localStorage.getItem("KEYS"))||{
+  "pepamodz2312":{status:"ativa",exp:Infinity}
+};
+function salvar(){localStorage.setItem("KEYS",JSON.stringify(KEYS));}
+
+function loginKey(){
+  const k=keyInput.value.trim();
+  const key=KEYS[k];
+  if(!key) return alert("Key inválida");
+  if(key.status==="banida") return alert("Key banida");
+  if(key.status==="pausada") return alert("Key pausada");
+  if(Date.now()>key.exp) return alert("Key expirada");
+  login.classList.add("hidden");
+  painel.classList.remove("hidden");
+}
+
+function aba(id){
+  aimbot.classList.add("hidden");
+  info.classList.add("hidden");
+  document.getElementById(id).classList.remove("hidden");
+}
+
+function abrirAdmin(){
+  const s=prompt("Senha admin:");
+  if(s!==ADMIN_PASSWORD) return alert("Senha incorreta");
+  painel.classList.add("hidden");
+  admin.classList.remove("hidden");
+}
+
+function gerarKeys(){
+  const qtd=parseInt(quantidade.value);
+  const d=parseInt(dias.value);
+  if(!qtd) return;
+  for(let i=0;i<qtd;i++){
+    const k="sleep"+Math.random().toString(36).substr(2,8);
+    KEYS[k]={status:"ativa",exp:Date.now()+d*86400000};
+    listaKeys.value+=k+" | "+d+" dias\n";
+  }
+  salvar();
+}
+
+function banir(){if(KEYS[keyAlvo.value]){KEYS[keyAlvo.value].status="banida";salvar();}}
+function pausar(){if(KEYS[keyAlvo.value]){KEYS[keyAlvo.value].status="pausada";salvar();}}
+function desbanir(){if(KEYS[keyAlvo.value]){KEYS[keyAlvo.value].status="ativa";salvar();}}
+
+function inject(){ffModal.classList.remove("hidden");}
+function fecharModal(){ffModal.classList.add("hidden");}
+function ffNormal(){fecharModal();window.open("https://play.google.com/store/apps/details?id=com.dts.freefireth","_blank");}
+function ffMax(){fecharModal();window.open("https://play.google.com/store/apps/details?id=com.dts.freefiremax","_blank");}
+</script>
+</body>
+</html>
